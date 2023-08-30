@@ -13,10 +13,47 @@ services:
         MYSQL_USER: ${MYSQL_USER}
         MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     restart: unless-stopped
-    # volumes:
-    #   - mariadb:/var/lib/mysql
+    volumes:
+      - mariadb:/var/lib/mysql
     networks:
       - inception
+
+  wordpress:
+    image: wordpress
+    container_name: wordpress
+    depends_on:
+      - mariadb
+    build:
+      context: ./requirements/wordpress/
+      dockerfile: Dockerfile
+      args:
+        MYSQL_HOST: mariadb:3306
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+    volumes:
+      - wordpress:/var/www/wordpress
+    networks:
+      - inception
+
+volumes:
+  mariadb:
+    name: mariadb
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/acarneir/data/mysql
+      o: bind
+  wordpress:
+    name: wordpress
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/acarneir/data/wordpress
+      o: bind
 
 networks:
   inception:

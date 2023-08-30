@@ -14,7 +14,7 @@ RUN sed -i 's/bind-address/#bind-address/' /etc/mysql/mariadb.conf.d/50-server.c
 	mysql -e "CREATE DATABASE $MYSQL_DATABASE;" && \
 	mysql -e "CREATE USER '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';" && \
 	mysql -e "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%';" && \
-	mysql -e "FLUSH PRIVILEGES;" ;
+	mysql -e "FLUSH PRIVILEGES;"
 	# mysql -uroot -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE < backup.sql ;
 
 EXPOSE 3306
