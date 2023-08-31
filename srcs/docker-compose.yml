@@ -32,8 +32,22 @@ services:
         MYSQL_USER: ${MYSQL_USER}
         MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     restart: unless-stopped
+    volumes:
+      - wordpress:/var/www/wordpress
+    networks:
+      - inception
+
+  nginx:
+    image: nginx
+    container_name: nginx
+    depends_on:
+      - wordpress
+    build:
+      context: ./requirements/nginx/
+      dockerfile: Dockerfile
+    restart: unless-stopped
     ports:
-      - "9000:9000"
+      - "80:80"
     volumes:
       - wordpress:/var/www/wordpress
     networks:

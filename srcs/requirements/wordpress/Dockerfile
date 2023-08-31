@@ -26,7 +26,7 @@ RUN wget -P /tmp https://downloads.wordpress.org/theme/twentyseventeen.3.2.zip \
 	&& unzip /tmp/twentyseventeen.3.2.zip -d /var/www/wordpress/wp-content/themes/ \
 	&& rm /tmp/twentyseventeen.3.2.zip
 
-# COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/
+COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/
 
 RUN chown -R www-data:www-data /var/www/wordpress \
 	&& chmod -R 777 /var/www/wordpress
